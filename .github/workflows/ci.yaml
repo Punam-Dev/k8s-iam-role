@@ -26,13 +26,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Configure AWS Credentials from AWS Account
+      - name: Configure AWS Credentials from AWS Account in ${{ matrix.directory }}
         env:
          ENVIRONMENT: ${{ matrix.directory }}
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          #role-to-assume: arn:aws:iam::730335281548:role/k8s-iam-oidc-role
-          #role-to-assume: arn:aws:iam::${{secrets.ACCOUNT_ID}}:role/k8s-iam-oidc-role
           role-to-assume: arn:aws:iam::${{ secrets[format('{0}_ACCOUNT_ID', env.ENVIRONMENT)] }}:role/k8s-iam-oidc-role
           aws-region: us-east-1
           role-session-name: k8s-iam-role-deployment
