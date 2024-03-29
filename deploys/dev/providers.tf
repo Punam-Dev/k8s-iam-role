@@ -9,10 +9,10 @@ terraform {
 
 provider "aws" {
   region = "${var.region}"
-  assume_role {
-    role_arn = var.terraform_base_role_arn
-    session_name = var.session_name
-  }
+  # assume_role {
+  #   role_arn = var.terraform_base_role_arn
+  #   session_name = var.session_name
+  # }
   default_tags {
     tags = {
       Environment = "Dev"
