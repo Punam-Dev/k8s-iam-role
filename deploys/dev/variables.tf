@@ -2,7 +2,7 @@ variable "terraform_base_role_arn" {default = "arn:aws:iam::730335281548:role/k8
 
 variable "oidc_provider_apps" {default = ""}
 
-variable "region" {default = ""}
+variable "region" {default = "us-east-1"}
 
 variable "session_name" {default = "k8s-iam-role-deployment"}
 
