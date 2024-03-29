@@ -13,10 +13,10 @@ provider "aws" {
   #   role_arn = var.terraform_base_role_arn
   #   session_name = var.session_name
   # }
-  assume_role_with_web_identity {
-    role_arn                = "arn:aws:iam::730335281548:role/k8s-iam-oidc-role"
-    session_name            = var.session_name
-  }
+  # assume_role_with_web_identity {
+  #   role_arn                = ""var.terraform_base_role_arn""
+  #   session_name            = var.session_name
+  # }
   default_tags {
     tags = {
       Environment = "Dev"
