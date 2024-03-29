@@ -13,9 +13,10 @@ permissions:
 jobs:
   terraform:
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
-        environment: [dev]
+        environments: ["dev"]
     defaults:
       run:
         shell: bash
@@ -36,12 +37,12 @@ jobs:
 
       - name: Terraform Init
         env: 
-          environmentName: ${{ matrix.environment }}
-        working-directory: deploys/$environmentName
+          environmentName: ${{ matrix.environments }}
+        working-directory: deploys/${environmentName}
         run: terraform init
 
       - name: Terraform Plan
         env: 
-          environmentName: ${{ matrix.environment }}
-        working-directory: deploys/$environmentName
+          environmentName: ${{ matrix.environments }}
+        working-directory: deploys/${environmentName}
         run: terraform plan
