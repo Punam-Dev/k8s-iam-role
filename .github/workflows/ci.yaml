@@ -71,6 +71,7 @@ jobs:
             \`\`\`
 
             </details>
+
             #### Terraform Plan ${{ matrix.directory }} 📖\`${{ steps.tfplan.outcome }}\`
 
             <details><summary>Show Plan</summary>
@@ -90,7 +91,7 @@ jobs:
               body: output
             })
 
-      # - name: Terraform Apply ${{ matrix.directory }}
-      #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      #   working-directory: deploys/${{ matrix.directory }}
-      #   run: terraform apply -auto-approve
+      - name: Terraform Apply ${{ matrix.directory }}
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        working-directory: deploys/${{ matrix.directory }}
+        run: terraform apply -auto-approve
