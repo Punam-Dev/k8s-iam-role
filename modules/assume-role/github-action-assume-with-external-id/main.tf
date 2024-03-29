@@ -26,8 +26,6 @@ resource "aws_iam_role" "test_role" {
     for_each = { for idx, path in var.role.policies : idx => path }
     content {
       name   = "${inline_policy.key}-policy"
-      # policy = file("${path.module}/${inline_policy.value}")
-      # policy = file("../../modules/openweatherforecast-api/policies/s3.json")
       policy = file("../../modules/${inline_policy.value}")
     }
   }

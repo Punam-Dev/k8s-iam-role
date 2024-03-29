@@ -17,6 +17,7 @@ module "openWeatherforecast_terraform_role" {
     sub = "repo:Punam-Dev/OpenWeatherForecast.Api:*"
     policies = [ 
       "openweatherforecast-api/policies/s3.json", 
+      "openweatherforecast-api/policies/secretmanager.json", 
     ]
   }
 }
