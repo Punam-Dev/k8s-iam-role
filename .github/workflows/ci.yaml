@@ -12,11 +12,13 @@ permissions:
 
 jobs:
   terraform:
-    runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        environments: ["dev"]
+        directory: [dev]
+
+    runs-on: ubuntu-latest
+
+
     defaults:
       run:
         shell: bash
@@ -32,17 +34,18 @@ jobs:
           aws-region: us-east-1
           role-session-name: k8s-iam-role-deployment
 
+      - name: run test ${{ matrix.environments }}
+        run: testcommand ${FILE}
+        env:
+          FILE: ${{ matrix.environments }}
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
 
       - name: Terraform Init
-        env: 
-          environmentName: ${{ matrix.environments }}
-        working-directory: deploys/${environmentName}
+        working-directory: deploys/${{ matrix.directory }}
         run: terraform init
 
       - name: Terraform Plan
-        env: 
-          environmentName: ${{ matrix.environments }}
-        working-directory: deploys/${environmentName}
+        working-directory: deploys/${{ matrix.directory }}
         run: terraform plan
