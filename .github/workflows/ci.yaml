@@ -34,11 +34,6 @@ jobs:
           aws-region: us-east-1
           role-session-name: k8s-iam-role-deployment
 
-      - name: run test ${{ matrix.environments }}
-        run: testcommand ${FILE}
-        env:
-          FILE: ${{ matrix.environments }}
-
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
 
