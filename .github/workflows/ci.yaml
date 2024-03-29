@@ -57,12 +57,20 @@ jobs:
         if: github.event_name == 'pull_request'
         env:
           PLAN: "terraform\n${{ steps.tfplan.outputs.stdout }}"
+          INIT: "terraform\n${{ steps.tfinit.outputs.stdout }}"
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const output = `#### Terraform Init ${{ matrix.directory }} ⚙️\`${{ steps.tfinit.outcome }}\`
 
+            <details><summary>Show Init</summary>
+
+            \`\`\`\n
+            ${process.env.INIT}
+            \`\`\`
+
+            </details>
             #### Terraform Plan ${{ matrix.directory }} 📖\`${{ steps.tfplan.outcome }}\`
 
             <details><summary>Show Plan</summary>
