@@ -61,8 +61,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const output = `#### Terraform Format and Style 🖌\`\`
-            #### Terraform Init ${{ matrix.directory }} ⚙️\`${{ steps.tfinit.outcome }}\`
+            const output = `#### Terraform Init ${{ matrix.directory }} ⚙️\`${{ steps.tfinit.outcome }}\`
 
             #### Terraform Plan ${{ matrix.directory }} 📖\`${{ steps.tfplan.outcome }}\`
 
