@@ -2,6 +2,9 @@ name: CI
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
@@ -9,6 +12,7 @@ on:
 permissions:
   id-token: write
   contents: read
+  pull-requests: write
 
 jobs:
   terraform:
@@ -39,9 +43,47 @@ jobs:
         uses: hashicorp/setup-terraform@v1
 
       - name: Terraform Init ${{ matrix.directory }}
+        id: tfinit
         working-directory: deploys/${{ matrix.directory }}
         run: terraform init
 
       - name: Terraform Plan ${{ matrix.directory }}
+        id: tfplan
+        if: github.event_name == 'pull_request'
         working-directory: deploys/${{ matrix.directory }}
         run: terraform plan
+
+      - name: Comment on PR with Terraform outputs ${{ matrix.directory }}
+        if: github.event_name == 'pull_request'
+        env:
+          PLAN: "terraform\n${{ steps.tfplan.outputs.stdout }}"
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const output = `#### Terraform Format and Style 🖌\`\`
+            #### Terraform Init ${{ matrix.directory }} ⚙️\`${{ steps.tfinit.outcome }}\`
+
+            #### Terraform Plan ${{ matrix.directory }} 📖\`${{ steps.tfplan.outcome }}\`
+
+            <details><summary>Show Plan</summary>
+
+            \`\`\`\n
+            ${process.env.PLAN}
+            \`\`\`
+
+            </details>
+
+            *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
+
+      # - name: Terraform Apply ${{ matrix.directory }}
+      #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      #   working-directory: deploys/${{ matrix.directory }}
+      #   run: terraform apply -auto-approve
