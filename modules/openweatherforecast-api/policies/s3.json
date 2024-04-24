@@ -6,7 +6,7 @@
       "Action": [
         "s3:*"
       ],
-      "Resource": "arn:aws:s3:::k8s-iam-role-dev"
+      "Resource": "arn:aws:s3:::*"
     }
   ]
 }
