@@ -16,6 +16,10 @@ module "openWeatherforecast_terraform_role" {
     external_id = "52c1fdb4-e26c-4953-910e-ac951f1177c8",
     sub = "repo:Punam-Dev/OpenWeatherForecast.Api:*"
     policies = [ 
+      "openweatherforecast-api/policies/alb.json", 
+      "openweatherforecast-api/policies/ec2.json", 
+      "openweatherforecast-api/policies/iam.json", 
+      "openweatherforecast-api/policies/route53.json", 
       "openweatherforecast-api/policies/s3.json", 
       "openweatherforecast-api/policies/secretmanager.json", 
     ]
