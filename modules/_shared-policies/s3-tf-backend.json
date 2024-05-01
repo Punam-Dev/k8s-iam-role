@@ -6,7 +6,7 @@
         "Action": [
           "s3:*"
         ],
-        "Resource": "arn:aws:s3:::terraform-backend-shared-state"
+        "Resource": "arn:aws:s3:::terraform-backend-shared-state*"
       }
     ]
   }
