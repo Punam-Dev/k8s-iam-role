@@ -6,7 +6,7 @@
       "Action": [
         "s3:*"
       ],
-      "Resource": "arn:aws:s3:::OpenWeatherForecast-Api*"
+      "Resource": "arn:aws:s3:::openweatherforecast-api*"
     }
   ]
 }
